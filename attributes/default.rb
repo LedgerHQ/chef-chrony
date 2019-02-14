@@ -39,6 +39,8 @@ default['chrony']['allow'] = ['allow']
 # set in the client & master recipes
 default['chrony']['initstepslew'] = ''
 
+default['chrony']['discover_chrony_servers'] = true
+
 # internal attributes
 default['chrony']['package'] = 'chrony'
 default['chrony']['service'] = 'chrony'

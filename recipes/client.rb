@@ -29,7 +29,8 @@ node.default['chrony']['allow'] = []
 
 # search for the chrony master(s), if found populate the template accordingly
 # typical deployment will only have 1 master, but still allow for multiple
-masters = search(:node, 'recipes:chrony\:\:master') || []
+masters = []
+masters = search(:node, 'recipes:chrony\:\:master') if node['chrony']['discover_chrony_servers']
 if !masters.empty?
   node.default['chrony']['servers'] = {}
   masters.each do |master|
@@ -39,7 +40,7 @@ if !masters.empty?
     node.default['chrony']['initstepslew'] = "initstepslew 20 #{master['ipaddress']}"
   end
 else
-  Chef::Log.info('No chrony master(s) found, using node[:chrony][:servers] attribute.')
+  Chef::Log.info('No chrony master(s) found, using node[:chrony][:servers] & node[:chrony][:pools] attribute.') unless node['chrony']['discover_chrony_servers']
 end
 
 template node['chrony']['conffile'] do
