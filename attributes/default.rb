@@ -37,6 +37,9 @@ default['chrony']['server_options'] = 'offline minpoll 8'
 default['chrony']['allow'] = ['allow']
 
 # set in the client & master recipes
+# The purpose of the initstepslew directive is to allow chronyd to make a rapid
+# measurement of the system clock error at boot time, and to correct the system
+# clock by stepping before normal operation begins.
 default['chrony']['initstepslew'] = ''
 
 default['chrony']['discover_chrony_servers'] = true

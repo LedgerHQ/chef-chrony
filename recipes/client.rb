@@ -41,6 +41,13 @@ if !masters.empty?
   end
 else
   Chef::Log.info('No chrony master(s) found, using node[:chrony][:servers] & node[:chrony][:pools] attribute.') unless node['chrony']['discover_chrony_servers']
+  # configure the initstepslew mecanism
+  initstepslew = "initstepslew 20"
+  node.default['chrony']['servers'].each do |server,options|
+    node.default["chrony"]["allow"].push "allow #{server}"
+    initstepslew = [initstepslew, server].join(" ")
+  end
+  node.default["chrony"]["initstepslew"] = initstepslew
 end
 
 template node['chrony']['conffile'] do

@@ -42,7 +42,7 @@ else # else use first 3 clients
     node.default['chrony']['initstepslew'] = 'initstepslew 10'
     count = 3
     count = clients.length if clients.length < count
-    count.times { |x| node.default['chrony']['initstepslew'] += " #{clients[x].ipaddress}" }
+    count.times { |x| node.default['chrony']['initstepslew'] += " #{clients[x]['ipaddress']}" }
   end
 end
 
