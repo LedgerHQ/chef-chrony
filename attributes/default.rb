@@ -54,7 +54,7 @@ case node['platform_family']
 when 'amazon'
   default['chrony']['service'] = 'chronyd'
   default['chrony']['conffile'] = '/etc/chrony.conf'
-when 'redhat'
+when 'rhel'
   default['chrony']['service'] = 'chronyd'
   default['chrony']['conffile'] = '/etc/chrony.conf'
 end
