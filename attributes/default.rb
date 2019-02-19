@@ -48,13 +48,14 @@ default['chrony']['discover_chrony_servers'] = true
 default['chrony']['package'] = 'chrony'
 default['chrony']['service'] = 'chrony'
 default['chrony']['conffile'] = '/etc/chrony/chrony.conf'
+default['chrony']['keyfile'] = '/etc/chrony/chrony.keys'
+default['chrony']['dumpdir'] = '/var/lib/chrony'
 
 # overrides on a platform-by-platform basis
 case node['platform_family']
-when 'amazon'
+when 'amazon', 'rhel'
   default['chrony']['service'] = 'chronyd'
   default['chrony']['conffile'] = '/etc/chrony.conf'
-when 'rhel'
-  default['chrony']['service'] = 'chronyd'
-  default['chrony']['conffile'] = '/etc/chrony.conf'
+  default['chrony']['keyfile'] = '/etc/chrony.keys'
+  default['chrony']['dumpdir'] = '/var/run/chrony'
 end
