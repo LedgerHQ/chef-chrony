@@ -17,4 +17,17 @@
 # limitations under the License.
 #
 
+# Clean up breakage stemming from the application of the latest upstream version
+file "/etc/systemd/system/chrony.service" do
+  action :delete
+  notifies :run, "bash[systemd_reload]", :immediately
+  notifies :restart, "service[#{node['chrony']['service']}]"
+  only_if { ::File.exist?("/etc/systemd/system/chrony.service") }
+end
+
+bash "systemd_reload" do
+  code "systemctl daemon-reload"
+  action :nothing
+end
+
 include_recipe 'chrony::client'
